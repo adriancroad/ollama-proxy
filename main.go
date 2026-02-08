@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -15,12 +16,22 @@ import (
 const maxBodyLog = 10 * 1024 // 10KB
 
 func main() {
-	proxyPort := os.Getenv("PROXY_PORT")
+	portFlag := flag.String("port", "", "Port to listen on (e.g. :9090)")
+	urlFlag := flag.String("url", "", "Upstream Ollama URL")
+	flag.Parse()
+
+	proxyPort := *portFlag
+	if proxyPort == "" {
+		proxyPort = os.Getenv("PROXY_PORT")
+	}
 	if proxyPort == "" {
 		proxyPort = ":8080"
 	}
 
-	ollamaURL := os.Getenv("OLLAMA_URL")
+	ollamaURL := *urlFlag
+	if ollamaURL == "" {
+		ollamaURL = os.Getenv("OLLAMA_URL")
+	}
 	if ollamaURL == "" {
 		ollamaURL = "http://localhost:11434"
 	}

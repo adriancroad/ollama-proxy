@@ -19,11 +19,17 @@ By default the proxy listens on `:8080` and forwards to `http://localhost:11434`
 
 ## Configuration
 
-| Environment Variable | Default                    | Description                  |
-|----------------------|----------------------------|------------------------------|
-| `PROXY_PORT`         | `:8080`                    | Port the proxy listens on    |
-| `OLLAMA_URL`         | `http://localhost:11434`   | Upstream Ollama instance URL |
+Command line flags take priority over environment variables.
+
+| Flag | Environment Variable | Default                    | Description                  |
+|------|----------------------|----------------------------|------------------------------|
+| `-port` | `PROXY_PORT`      | `:8080`                    | Port the proxy listens on    |
+| `-url`  | `OLLAMA_URL`      | `http://localhost:11434`   | Upstream Ollama instance URL |
 
 ```sh
+# Using flags
+./ollama-proxy -port :9090 -url http://192.168.1.50:11434
+
+# Using environment variables
 PROXY_PORT=:9090 OLLAMA_URL=http://192.168.1.50:11434 ./ollama-proxy
 ```
